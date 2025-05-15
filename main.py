@@ -341,7 +341,7 @@ async def cmd_time(message: types.Message):
     city = args[1]
     matches = [tz for tz in pytz.all_timezones if city.lower() in tz.lower()]
     if not matches:
-        return await message.answer("❌ Город не найден в списке временных зон.")
+        return await message.answer("❌ Часовой пояс не найден в списке временных зон. Введите запрос на английском языке.")
     tz = pytz.timezone(matches[0])
     current_time = datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S')
     await message.answer(f"⏰ Время в <b>{matches[0]}</b>: {current_time}")
