@@ -286,7 +286,7 @@ async def cmd_start(message: types.Message):
     if blocked:
         return await message.answer(f"⛔ Вы заблокированы.\nПричина: {reason}\nДо: {until}")
     await save_user(message.from_user)
-    await message.answer("👋 Привет! Я – твой весёлый цифровой помощник!. Выбери действие:",
+    await message.answer("👋 Здравствуй!!! Я – твой цифровой помощник! Функции:",
                          reply_markup=main_keyboard())
 
 
@@ -324,7 +324,7 @@ async def cmd_weather(message: types.Message):
         data = response.json()
         temp = data["main"]["temp"]
         desc = data["weather"][0]["description"]
-        await message.answer(f"🌡 Погода в <b>{city}</b>: {temp}°C, {desc}")
+        await message.answer(f"🌡 Погода в городе <b>{city}</b>: {temp}°C, {desc}")
     else:
         await message.answer("⚠️ Не удалось получить данные о погоде.")
 
@@ -341,10 +341,11 @@ async def cmd_time(message: types.Message):
     city = args[1]
     matches = [tz for tz in pytz.all_timezones if city.lower() in tz.lower()]
     if not matches:
-        return await message.answer("❌ Часовой пояс не найден в списке временных зон. Введите запрос на английском языке.")
+        return await message.answer(
+            "❌ Часовой пояс не найден в списке временных зон. Введите запрос на английском языке.")
     tz = pytz.timezone(matches[0])
     current_time = datetime.now(tz).strftime('%Y-%m-%d %H:%M:%S')
-    await message.answer(f"⏰ Время в <b>{matches[0]}</b>: {current_time}")
+    await message.answer(f"⏰ Время в поясе <b>{matches[0]}</b>: {current_time}")
 
 
 # -----------------------
@@ -423,7 +424,7 @@ async def cmd_block(message: types.Message):
         await block_user(user_id, reason, minutes)
         await message.answer(
             f"✅ Пользователь {user_id} заблокирован{' на ' + str(minutes) + ' минут' if minutes else ''}. Причина: "
-            f"{reason or 'не указана'}")
+            f"{reason or 'Не указана'}")
     except Exception as e:
         await message.answer(f"⚠️ Ошибка при блокировке: {e}")
 
